@@ -1,5 +1,5 @@
 """
-X-ray model loader — weights live under backbone/xray/models/.
+X-ray model loader — weights live under xray/models/.
 """
 
 from pathlib import Path
@@ -8,8 +8,8 @@ import torch
 import torch.nn as nn
 from torchvision import models
 
-BACKBONE_ROOT = Path(__file__).resolve().parent
-XRAY_WEIGHTS = BACKBONE_ROOT / "xray" / "models"
+XRAY_ROOT = Path(__file__).resolve().parent
+XRAY_WEIGHTS = XRAY_ROOT / "models"
 
 CLASS_NAMES = ["0", "1", "2", "3", "4"]
 NUM_CLASSES = len(CLASS_NAMES)

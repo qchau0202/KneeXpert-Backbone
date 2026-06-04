@@ -5,9 +5,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-from mri.config import BACKBONE_ROOT
-
-LABEL_SUMMARY_PATH = BACKBONE_ROOT / "scan_label_summary.txt"
+from mri.config import LABEL_SUMMARY_PATH
 
 _CATEGORY_RE = re.compile(r"^\s*\[\s*(\d+)\]\s*(.+?)\s*$")
 _SCAN_RE = re.compile(r"^(MTR_\d+)\s+\(source:")

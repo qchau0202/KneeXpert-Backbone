@@ -10,8 +10,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pathlib import Path
 
-from ensemble import predict_xray
-from mri.config import SAMPLE_MRI_PATH
+from mri.config import LABEL_SUMMARY_PATH, SAMPLE_MRI_PATH
+from xray.ensemble import predict_xray
 from mri.label_summary import parse_label_summary
 from mri.pipeline import mri_models_available, predict_mri
 from xray import DEFAULT_ENSEMBLE_MODELS, MODELS_CONFIG, ModelLoader, all_available_model_ids
@@ -43,7 +43,7 @@ async def health_check():
         "mri_pipeline_ready": all(mri_status.values()),
         "mri_sample_available": SAMPLE_MRI_PATH.is_file(),
         "mri_sample_filename": SAMPLE_MRI_PATH.name if SAMPLE_MRI_PATH.is_file() else None,
-        "mri_label_summary_available": (Path(__file__).resolve().parent / "scan_label_summary.txt").is_file(),
+        "mri_label_summary_available": LABEL_SUMMARY_PATH.is_file(),
     }
 
 
@@ -51,8 +51,8 @@ async def health_check():
 async def mri_categories():
     categories, _ = parse_label_summary()
     if not categories:
-        raise HTTPException(status_code=404, detail="scan_label_summary.txt not found in backbone/")
-    return {"categories": categories, "source": "scan_label_summary.txt"}
+        raise HTTPException(status_code=404, detail="scan_label_summary.txt not found in backbone/data/")
+    return {"categories": categories, "source": "data/scan_label_summary.txt"}
 
 
 @app.post("/api/xray/predict")
@@ -128,7 +128,7 @@ async def predict_mri_sample(threshold: float | None = Form(default=None)):
         if not SAMPLE_MRI_PATH.is_file():
             raise HTTPException(
                 status_code=404,
-                detail=f"Sample MRI not found: {SAMPLE_MRI_PATH.name}. Place it in the backbone folder.",
+                detail=f"Sample MRI not found: {SAMPLE_MRI_PATH.name}. Place it in backbone/data/samples/.",
             )
         mri_status = mri_models_available()
         if not all(mri_status.values()):

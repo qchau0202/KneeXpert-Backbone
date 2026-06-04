@@ -1,7 +1,7 @@
 """
 MRI inference pipeline: raw 3D volume → MACS-Net artifact removal → 2.5D DeiT-S classification.
 
-Matches mri-pipeline.ipynb:
+Matches notebooks/mri_pipeline.ipynb:
 - Slice along last axis vol[..., z] (512×512 in-plane, depth on axis 2)
 - 2.5D stack (z-1, z, z+1) → (3, 224, 224)
 - Per-slice: raw | MACS cleaned | artifact map | DeiT Grad-CAM
@@ -17,7 +17,7 @@ from typing import Any
 import numpy as np
 import torch
 
-from clinical_feedback import findings_for_grade
+from shared.clinical_feedback import findings_for_grade
 from mri.config import (
     AGG_METHOD,
     DEIT_IMG_SIZE,

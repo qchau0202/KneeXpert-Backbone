@@ -4,8 +4,11 @@ from pathlib import Path
 
 MRI_ROOT = Path(__file__).resolve().parent
 BACKBONE_ROOT = MRI_ROOT.parent
+DATA_DIR = BACKBONE_ROOT / "data"
+SAMPLES_DIR = DATA_DIR / "samples"
 WEIGHTS_DIR = MRI_ROOT / "models"
 CATEGORIES_JSON = MRI_ROOT / "categories.json"
+LABEL_SUMMARY_PATH = DATA_DIR / "scan_label_summary.txt"
 
 MACS_CHECKPOINT = WEIGHTS_DIR / "best_macs_net.pth"
 DEIT_CHECKPOINT = WEIGHTS_DIR / "best_deit_small_multilabel_main.pth"
@@ -28,4 +31,4 @@ PIPELINE_MODE = "online"
 
 # Pre-loaded dev sample (skip client upload during testing)
 SAMPLE_MRI_FILENAME = "Effusion.nii.gz"
-SAMPLE_MRI_PATH = BACKBONE_ROOT / SAMPLE_MRI_FILENAME
+SAMPLE_MRI_PATH = SAMPLES_DIR / SAMPLE_MRI_FILENAME

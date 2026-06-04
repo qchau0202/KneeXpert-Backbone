@@ -1,6 +1,31 @@
 # KneeXpert Backbone API
 
-X-ray KL grading (0–4) with ensemble learning and Grad-CAM. Weights live in `xray/models/`.
+X-ray KL grading (0–4) with ensemble learning and Grad-CAM; MRI with MACS-Net + DeiT-S.
+
+## Layout
+
+```
+backbone/
+├── app.py                 # FastAPI entry point
+├── requirements.txt
+├── shared/                # Cross-modality utilities
+│   └── clinical_feedback.py
+├── xray/                  # X-ray models & inference
+│   ├── loader.py
+│   ├── ensemble.py
+│   ├── gradcam.py
+│   └── models/            # *.pth weights (gitignored)
+├── mri/                   # MRI pipeline
+│   ├── pipeline.py
+│   └── models/            # checkpoints (gitignored)
+├── data/
+│   ├── scan_label_summary.txt
+│   └── samples/           # dev .nii.gz volumes (gitignored)
+└── notebooks/
+    └── mri_pipeline.ipynb
+```
+
+Place X-ray weights in `xray/models/` and MRI checkpoints in `mri/models/` (see filenames in `xray/loader.py` and `mri/config.py`).
 
 ## Setup
 
@@ -25,9 +50,11 @@ Health check: `GET http://localhost:9000/health`
 |--------|------|-------------|
 | GET | `/health` | Service status and available models |
 | POST | `/api/xray/predict` | Single image (KneeXpert) — `file`, optional `model_names` |
+| POST | `/api/mri/predict` | Single MRI volume |
+| POST | `/api/mri/predict/sample` | Dev sample from `data/samples/Effusion.nii.gz` |
 | POST | `/predict` | Batch images (demo-compatible) |
 
-**Models** (weights in `xray/models/`):
+**X-ray models** (weights in `xray/models/`):
 
 | ID | Weights file |
 |----|----------------|

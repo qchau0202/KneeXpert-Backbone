@@ -13,9 +13,9 @@ import torch
 from PIL import Image
 from torchvision import transforms
 
-from clinical_feedback import findings_for_grade
-from gradcam import GradCAMGenerator
-from xray import CLASS_NAMES, DEFAULT_ENSEMBLE_MODELS, MODELS_CONFIG, ModelLoader, all_available_model_ids
+from shared.clinical_feedback import findings_for_grade
+from xray.gradcam import GradCAMGenerator
+from xray.loader import CLASS_NAMES, DEFAULT_ENSEMBLE_MODELS, MODELS_CONFIG, ModelLoader, all_available_model_ids
 
 TRANSFORM = transforms.Compose([
     transforms.Resize((224, 224)),
