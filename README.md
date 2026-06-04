@@ -30,7 +30,7 @@ Place X-ray weights in `xray/models/` and MRI checkpoints in `mri/models/` (see 
 ## Setup
 
 ```bash
-cd backbone
+cd KneeXpert-Backbone
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
@@ -69,6 +69,9 @@ Health check: `GET http://localhost:9000/health`
 
 Pass `model_names=all` (default) to evaluate every available checkpoint. Ensemble = mean softmax across selected models.
 
-## KneeXpert
+**MRI models** (weights in `mri/models/`):
 
-Set `VITE_BACKBONE_URL=http://localhost:9000` in KneeXpert `.env` (see `.env.example`).
+| ID | Weights file |
+|----|----------------|
+| `best_deit_small_multilabel_main` | `best_deit_small_multilabel_main.pth` |
+| `best_macs_net`| `best_macs_net.pth` |
